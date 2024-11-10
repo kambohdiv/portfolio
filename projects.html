@@ -583,7 +583,7 @@
           };
 
           if (GITHUB_TOKEN) {
-            headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
+            headers.Authorization = `${GITHUB_TOKEN}`;
           }
 
           const response = await fetch(
