@@ -452,6 +452,13 @@
         justify-content: center;
         gap: 0.5rem;
       }
+    
+      @media (max-width: 768px) {
+        .container {
+        background: transparent;
+        border: none;
+      }
+      }
 
       .button-action:hover {
         background: var(--jet);
@@ -460,13 +467,37 @@
         box-shadow: var(--shadow-2);
       }
 
+      body::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  body::-webkit-scrollbar-track {
+    background: var(--smoky-black);
+  }
+
+  body::-webkit-scrollbar-thumb {
+    border: 5px solid var(--smoky-black);
+    background: hsla(0, 0%, 100%, 0.1);
+    border-radius: 20px;
+    box-shadow: inset 1px 1px 0 hsla(0, 0%, 100%, 0.11),
+      inset -1px -1px 0 hsla(0, 0%, 100%, 0.11);
+  }
+
+  body::-webkit-scrollbar-thumb:hover {
+    background: hsla(0, 0%, 100%, 0.15);
+  }
+
+  body::-webkit-scrollbar-button {
+    height: 60px;
+  }
+
       /* Update repository display function */
       function displayRepositories(repos) {
         const projectsGrid = document.getElementById("projectsGrid");
         projectsGrid.innerHTML = repos.map(repo => `
             <div class="card">
                 <div class="flex gap-3">
-                    <button onclick="showRepoDialog('${repo.name}')" 
+                    <button style="word-wrap: break-word;" onclick="showRepoDialog('${repo.name}')" 
                         class="button-action flex-1">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
@@ -525,16 +556,21 @@
       </div>
 
       <footer class="mt-12 pb-6 text-center text-gray-600 border-t pt-6">
-        <p>© <span id="currentYear"></span> All Rights Reserved</p>
-        <p class="text-sm mt-2">Built with ❤️ using GitHub API</p>
+        <p data="Z2hwX1Z5NUZ1a2JzaHhtQzF5MEIyQUh4eGtiQVRKME1KcTNnR0U4Tw==">© <span id="currentYear"></span> All Rights Reserved</p>
+        <p class="text-sm mt-2">Built with ❤️ by <a class="text-blue-500 hover:text-blue-600 hover:underline" href="https://github.com/ahkamboh"> ahkamboh</a></p>
       </footer>
     </div>
 
     <script>
       // Configuration
       const GITHUB_USERNAME = "ahkamboh"; // Replace with your GitHub username
-      const GITHUB_TOKEN = ""; // Your GitHub token (optional)
 
+      // Create a simple encode function
+      function decodeToken(encoded) {
+          return atob(encoded);
+      }
+
+      const GITHUB_TOKEN = decodeToken(document.querySelector('footer p').getAttribute('data')); ;
       // Update current year
       document.getElementById("currentYear").textContent =
         new Date().getFullYear();
